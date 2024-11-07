@@ -118,46 +118,26 @@ public class ListeSimple {
     }
 
     public void echanger(Noeud r1, Noeud r2) {
-        if (r1 == r2)
-            return;
-        if (r1.getSuivant() == r2) {
-            // Si r1 et r2 sont adjacents dans le sens r1 -> r2, échangez-les
-            Noeud temp = r1.getSuivant();
-            r1.setSuivant(temp.getSuivant());
-            temp.setSuivant(r1);
-            
-            // Mettez à jour le précédent de r1
-            if (r1 == tete) {
-                tete = temp; // Si r1 est la tête, la nouvelle tête est temp
-            } else {
-                Noeud precedentR1 = getPrecedent(r1);
-                precedentR1.setSuivant(temp);
-            }
+        if (r1 == r2) return;
     
-            return;
-        }
-    
-        // Cas général : les nœuds r1 et r2 ne sont pas adjacents
         Noeud precedentR1 = getPrecedent(r1);
         Noeud precedentR2 = getPrecedent(r2);
     
-        // Si r1 et r2 sont la tête de la liste, il faut manipuler correctement la tête
-        if (r1 == tete) {
-            tete = r2; // r2 devient la tête
+        if (precedentR1 != null) {
+            precedentR1.setSuivant(r2);
         } else {
-            precedentR1.setSuivant(r2); // Lien précédent de r1 vers r2
+            tete = r2;
         }
     
-        if (r2 == tete) {
-            tete = r1; // r1 devient la tête
+        if (precedentR2 != null) {
+            precedentR2.setSuivant(r1);
         } else {
-            precedentR2.setSuivant(r1); // Lien précédent de r2 vers r1
+            tete = r1;
         }
     
-        // Échange des liens "suivant" des deux nœuds
-        Noeud tempSuivant = r1.getSuivant();
+        Noeud temp = r1.getSuivant();
         r1.setSuivant(r2.getSuivant());
-        r2.setSuivant(tempSuivant);
+        r2.setSuivant(temp);
     }
     
 
