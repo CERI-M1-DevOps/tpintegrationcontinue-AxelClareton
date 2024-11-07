@@ -120,26 +120,45 @@ public class ListeSimple {
     public void echanger(Noeud r1, Noeud r2) {
         if (r1 == r2)
             return;
-        Noeud precedentR1;
-        Noeud precedentR2;
-        if (r1 != tete) {
-            precedentR1 = getPrecedent(r1);
-            precedentR2 = getPrecedent(r2);
-            precedentR1.setSuivant(r2);
-            precedentR2.setSuivant(r1);
-        } else if (r1 == tete) {
-            precedentR2 = getPrecedent(r2);
-            precedentR2.setSuivant(tete);
-            tete = r2;
+        if (r1.getSuivant() == r2) {
+            // Si r1 et r2 sont adjacents dans le sens r1 -> r2, échangez-les
+            Noeud temp = r1.getSuivant();
+            r1.setSuivant(temp.getSuivant());
+            temp.setSuivant(r1);
+            
+            // Mettez à jour le précédent de r1
+            if (r1 == tete) {
+                tete = temp; // Si r1 est la tête, la nouvelle tête est temp
+            } else {
+                Noeud precedentR1 = getPrecedent(r1);
+                precedentR1.setSuivant(temp);
+            }
+    
+            return;
         }
-        else {
-            precedentR1 = getPrecedent(r1);
-            precedentR1.setSuivant(tete);
-            tete = r1;
+    
+        // Cas général : les nœuds r1 et r2 ne sont pas adjacents
+        Noeud precedentR1 = getPrecedent(r1);
+        Noeud precedentR2 = getPrecedent(r2);
+    
+        // Si r1 et r2 sont la tête de la liste, il faut manipuler correctement la tête
+        if (r1 == tete) {
+            tete = r2; // r2 devient la tête
+        } else {
+            precedentR1.setSuivant(r2); // Lien précédent de r1 vers r2
         }
-        Noeud temp = r2.getSuivant();
-        r2.setSuivant(r1.getSuivant());
-        r1.setSuivant(temp);
+    
+        if (r2 == tete) {
+            tete = r1; // r1 devient la tête
+        } else {
+            precedentR2.setSuivant(r1); // Lien précédent de r2 vers r1
+        }
+    
+        // Échange des liens "suivant" des deux nœuds
+        Noeud tempSuivant = r1.getSuivant();
+        r1.setSuivant(r2.getSuivant());
+        r2.setSuivant(tempSuivant);
     }
+    
 
 }
