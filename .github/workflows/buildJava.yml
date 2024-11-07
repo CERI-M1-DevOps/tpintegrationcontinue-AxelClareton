@@ -9,7 +9,7 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: '21'
-      - name: SonarConnect
+      - name: SonarConnectTest
         env: 
           SONAR_TOKEN:  ${{ secrets.SONAR_TOKEN }}
         run: 
