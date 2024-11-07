@@ -1,5 +1,5 @@
 name: Java CI with Maven - Test and package
-on: [pull_request]
+on: [push]
 jobs:
   Action:
     runs-on: ubuntu-latest
