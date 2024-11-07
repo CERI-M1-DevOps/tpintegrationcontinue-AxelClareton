@@ -333,7 +333,7 @@ class ListeSimpleTest {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
-        Noeud last = listeATester.tete.getSuivant().getSuivant();
+        Noeud last = listeATester.tete.getSuivant();
         assertEquals(listeATester.tete.getSuivant(), listeATester.getPrecedent(last));
     }
 
