@@ -64,6 +64,14 @@ class ListeSimpleTest {
     }
 
     @Test
+    void modifiePremierListeVide() {
+        listeATester.modifiePremier(1, 3);
+        assertNull(listeATester.tete);
+        assertEquals(0, listeATester.getSize());
+    }
+
+
+    @Test
     void modifieTous() {
         listeATester.ajout(1);
         listeATester.ajout(2);
