@@ -5,29 +5,29 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class ListeSimpleTest {
+class ListeSimpleTest {
 
     ListeSimple listeATester;
 
     @BeforeEach
-     void init() {
+    public void init() {
         listeATester = new ListeSimple();
     }
 
     @Test
-     void listeConstruiteVide() {
+    void listeConstruiteVide() {
         assertNull(listeATester.tete);
         assertEquals(0, listeATester.getSize());
     }
 
     @Test
-     void ajoutAugmenteSize() {
+    void ajoutAugmenteSize() {
         listeATester.ajout(1);
         assertEquals(1, listeATester.getSize());
     }
 
     @Test
-     void ajoutChangeTete() {
+    void ajoutChangeTete() {
         listeATester.ajout(1);
         Noeud teteApresPremierAjout = listeATester.tete;
         listeATester.ajout(1);
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void ajoutPlusieursFoisLeMeme() {
+    void ajoutPlusieursFoisLeMeme() {
         listeATester.ajout(1);
         listeATester.ajout(1);
         listeATester.ajout(1);
@@ -44,142 +44,184 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void toStringDonneTousLesNoeuds() {
+    void toStringDonneTousLesNoeuds() {
         System.out.println(listeATester);
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         System.out.println(listeATester);
+        assertEquals("ListeSimple(Noeud(3), Noeud(2), Noeud(1))", listeATester.toString());
     }
 
     @Test
-     void modifiePremier() {
+    void modifiePremier() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.modifiePremier(2, 4);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(3), Noeud(4), Noeud(1))");
+        assertEquals("ListeSimple(Noeud(3), Noeud(4), Noeud(1))", listeATester.toString());
         assertEquals(4, listeATester.tete.getSuivant().getElement());
     }
 
     @Test
-     void modifieTous() {
+    void modifiePremierListeVide() {
+        listeATester.modifiePremier(2, 4);
+        assertNull(listeATester.tete);
+        assertEquals(0, listeATester.getSize());
+    }
+
+    @Test
+    void modifiePremierElementNonExistant() {
+        listeATester.ajout(1);
+        listeATester.ajout(3);
+        listeATester.ajout(5);
+        listeATester.modifiePremier(2, 4); // Element '2' is not in the list
+        assertEquals("ListeSimple(Noeud(5), Noeud(3), Noeud(1))", listeATester.toString());
+        assertEquals(3, listeATester.getSize());
+    }
+
+    @Test
+    void modifieTous() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(1);
         listeATester.ajout(1);
         listeATester.modifieTous(1, 4);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(4), Noeud(4), Noeud(2), Noeud(4))");
+        assertEquals("ListeSimple(Noeud(4), Noeud(4), Noeud(2), Noeud(4))", listeATester.toString());
         assertEquals(4, listeATester.tete.getSuivant().getElement());
     }
 
     @Test
-     void supprimePremierListeVide() {
+    void supprimePremierListeVide() {
         listeATester.supprimePremier(1);
         assertNull(listeATester.tete);
         assertEquals(0, listeATester.getSize());
     }
 
     @Test
-     void supprimePremierEnPremierePosition() {
+    void supprimePremierEnPremierePosition() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.supprimePremier(3);
-        assertEquals(listeATester.toString(),"ListeSimple(Noeud(2), Noeud(1))");
+        assertEquals("ListeSimple(Noeud(2), Noeud(1))", listeATester.toString());
         assertEquals(2, listeATester.getSize());
     }
 
     @Test
-     void supprimePremierEnPositionQuelconque() {
+    void supprimePremierEnPositionQuelconque() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.ajout(4);
         listeATester.supprimePremier(2);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(4), Noeud(3), Noeud(1))");
+        assertEquals("ListeSimple(Noeud(4), Noeud(3), Noeud(1))", listeATester.toString());
         assertEquals(3, listeATester.getSize());
     }
 
     @Test
-     void supprimePremierEnDernierePosition() {
+    void supprimePremierEnDernierePosition() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.ajout(4);
         listeATester.supprimePremier(1);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(4), Noeud(3), Noeud(2))");
+        assertEquals("ListeSimple(Noeud(4), Noeud(3), Noeud(2))", listeATester.toString());
         assertEquals(3, listeATester.getSize());
     }
 
     @Test
-     void supprimeTousListeVide() {
-        listeATester.supprimePremier(1);
+    void supprimePremierElementNonExistant() {
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        listeATester.supprimePremier(4);
+        assertEquals("ListeSimple(Noeud(3), Noeud(2), Noeud(1))", listeATester.toString());
+        assertEquals(3, listeATester.getSize());
+    }
+
+    @Test
+    void supprimePremierListeUnElementNonCorrespondant() {
+        listeATester.ajout(1);
+        listeATester.supprimePremier(2);
+        assertEquals("ListeSimple(Noeud(1))", listeATester.toString());
+        assertEquals(1, listeATester.getSize());
+    }
+
+    @Test
+    void supprimePremierListeUnElementCorrespondant() {
+        listeATester.ajout(1);
+        listeATester.supprimePremier(1); // Element '1' is the only element
         assertNull(listeATester.tete);
         assertEquals(0, listeATester.getSize());
     }
 
     @Test
-     void supprimeTousUneSeuleFoisAuDebut() {
+    void supprimeTousListeVide() {
+        supprimePremierListeVide();
+    }
+
+    @Test
+    void supprimeTousUneSeuleFoisAuDebut() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.supprimeTous(3);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(2), Noeud(1))");
+        assertEquals("ListeSimple(Noeud(2), Noeud(1))", listeATester.toString());
         assertEquals(2, listeATester.getSize());
     }
 
     @Test
-     void supprimeTousUneSeuleFoisPositionQuelconque() {
+    void supprimeTousUneSeuleFoisPositionQuelconque() {
         listeATester.ajout(1);
         listeATester.ajout(3);
         listeATester.ajout(2);
         listeATester.supprimeTous(3);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(2), Noeud(1))");
+        assertEquals("ListeSimple(Noeud(2), Noeud(1))", listeATester.toString());
         assertEquals(2, listeATester.getSize());
     }
 
     @Test
-     void supprimeTousPlusieursFois() {
+    void supprimeTousPlusieursFois() {
         listeATester.ajout(2);
         listeATester.ajout(1);
         listeATester.ajout(1);
         listeATester.supprimeTous(1);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(2))");
+        assertEquals("ListeSimple(Noeud(2))", listeATester.toString());
         assertEquals(1, listeATester.getSize());
     }
 
     @Test
-     void supprimeTousPlusieursFoisPositionQuelconque() {
+    void supprimeTousPlusieursFoisPositionQuelconque() {
         listeATester.ajout(3);
         listeATester.ajout(1);
         listeATester.ajout(3);
         listeATester.ajout(2);
         listeATester.supprimeTous(3);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(2), Noeud(1))");
+        assertEquals("ListeSimple(Noeud(2), Noeud(1))", listeATester.toString());
         assertEquals(2, listeATester.getSize());
     }
 
     @Test
-     void avantDernierListeVide() {
+    void avantDernierListeVide() {
         assertNull(listeATester.getAvantDernier());
     }
 
     @Test
-     void avantDernierListeAUnElement() {
+    void avantDernierListeAUnElement() {
         listeATester.ajout(1);
         assertNull(listeATester.getAvantDernier());
     }
 
     @Test
-     void avantDernierListeADeuxElements() {
+    void avantDernierListeADeuxElements() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         assertEquals(2, listeATester.getAvantDernier().getElement());
     }
 
     @Test
-     void avantDernierListeAPlusieursElements() {
+    void avantDernierListeAPlusieursElements() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
@@ -188,32 +230,32 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void inverserListeVide() {
+    void inverserListeVide() {
         listeATester.inverser();
         assertNull(listeATester.tete);
     }
 
     @Test
-     void inverserListeNbPairDElements() {
+    void inverserListeNbPairDElements() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.ajout(4);
         listeATester.inverser();
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4))");
+        assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4))", listeATester.toString());
     }
 
     @Test
-     void inverserListeNbImPairDElements() {
+    void inverserListeNbImPairDElements() {
         listeATester.ajout(1);
         listeATester.ajout(2);
         listeATester.ajout(3);
         listeATester.inverser();
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(1), Noeud(2), Noeud(3))");
+        assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3))", listeATester.toString());
     }
 
     @Test
-     void echanger2NoeudsQuelconques() {
+    void echanger2NoeudsQuelconques() {
         listeATester.ajout(5);
         listeATester.ajout(4);
         Noeud r1 = listeATester.tete;
@@ -221,13 +263,25 @@ import static org.junit.jupiter.api.Assertions.*;
         listeATester.ajout(2);
         Noeud r2 = listeATester.tete;
         listeATester.ajout(1);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))");
+        assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))", listeATester.toString());
         listeATester.echanger(r1, r2);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(1), Noeud(4), Noeud(3), Noeud(2), Noeud(5))");
+        assertEquals("ListeSimple(Noeud(1), Noeud(4), Noeud(3), Noeud(2), Noeud(5))", listeATester.toString());
     }
 
     @Test
-     void echangerLePremierNoeudAvecUnAutre() {
+    void echanger2NoeudsIdentique() {
+        listeATester.ajout(5);
+        listeATester.ajout(4);
+        Noeud r1 = listeATester.tete;
+        listeATester.ajout(3);
+        listeATester.ajout(2);
+        listeATester.ajout(1);
+        listeATester.echanger(r1, r1);
+        assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))", listeATester.toString());
+    }
+
+    @Test
+    void echangerLePremierNoeudAvecUnAutre() {
         listeATester.ajout(5);
         listeATester.ajout(4);
         Noeud r2 = listeATester.tete;
@@ -235,24 +289,60 @@ import static org.junit.jupiter.api.Assertions.*;
         listeATester.ajout(2);
         listeATester.ajout(1);
         Noeud r1 = listeATester.tete;
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))");
-        listeATester.echanger(r1, r2);
-        System.out.println(listeATester);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(4), Noeud(2), Noeud(3), Noeud(1), Noeud(5))");
-    }
-
-    @Test
-     void echangerLePremierEnSecondArgumentNoeudAvecUnAutre() {
-        listeATester.ajout(5);
-        listeATester.ajout(4);
-        Noeud r1 = listeATester.tete;
-        listeATester.ajout(3);
-        listeATester.ajout(2);
-        listeATester.ajout(1);
-        Noeud r2 = listeATester.tete;
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))");
+        assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))", listeATester.toString());
         listeATester.echanger(r1, r2);
         System.out.println(listeATester);
-        assertEquals(listeATester.toString(), "ListeSimple(Noeud(4), Noeud(2), Noeud(3), Noeud(1), Noeud(5))");
+        assertEquals("ListeSimple(Noeud(4), Noeud(2), Noeud(3), Noeud(1), Noeud(5))", listeATester.toString());
+    }
+
+    @Test
+    void echangerLePremierEnSecondArgumentNoeudAvecUnAutre() {
+        listeATester.ajout(5);
+        listeATester.ajout(4);
+        Noeud r1 = listeATester.tete;
+        listeATester.ajout(3);
+        listeATester.ajout(2);
+        listeATester.ajout(1);
+        Noeud r2 = listeATester.tete;
+        assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3), Noeud(4), Noeud(5))", listeATester.toString());
+        listeATester.echanger(r1, r2);
+        System.out.println(listeATester);
+        assertEquals("ListeSimple(Noeud(4), Noeud(2), Noeud(3), Noeud(1), Noeud(5))", listeATester.toString());
+    }
+
+    @Test
+    void getPrecedentTete() {
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        Noeud head = listeATester.tete;
+        assertNull(listeATester.getPrecedent(head));
+    }
+
+    @Test
+    void getPrecedentMilieu() {
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        Noeud middle = listeATester.tete.getSuivant();
+        assertEquals(listeATester.tete, listeATester.getPrecedent(middle));
+    }
+
+    @Test
+    void getPrecedentDernier() {
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        Noeud last = listeATester.tete.getSuivant().getSuivant();
+        assertEquals(listeATester.tete.getSuivant(), listeATester.getPrecedent(last));
+    }
+
+    @Test
+    void getPrecedentElementNonExistant() {
+        listeATester.ajout(1);
+        listeATester.ajout(2);
+        listeATester.ajout(3);
+        Noeud notInList = new Noeud(4, null);
+        assertNull(listeATester.getPrecedent(notInList));
     }
 }
