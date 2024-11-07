@@ -116,6 +116,7 @@ public class ListeSimple {
         }
         return precedent;
     }
+    
 
     public void echanger(Noeud r1, Noeud r2) {
         if (r1 != r2){
