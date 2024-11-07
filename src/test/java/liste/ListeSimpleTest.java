@@ -277,23 +277,27 @@ class ListeSimpleTest {
     }
 
     @Test
-    void echangerIdentiques() {
+    void echangerR1EstTete() {
         listeATester.ajout(1);
-        Noeud r1 = listeATester.tete;
-        listeATester.echanger(r1, r1);
-        assertEquals("ListeSimple(Noeud(1))", listeATester.toString()); 
+        listeATester.ajout(2);
+        Noeud r1 = listeATester.tete;  // Tête avec la valeur 2
+        Noeud r2 = listeATester.tete.getSuivant();  // Le noeud avec la valeur 1
+        listeATester.echanger(r1, r2);
+        assertEquals("ListeSimple(Noeud(1), Noeud(2))", listeATester.toString());
+        assertEquals(r2, listeATester.tete);  // R2 devient la tête
     }
 
     @Test
-    void echangerNoeudsMilieu() {
+    void echangerR2EstTete() {
         listeATester.ajout(1);
         listeATester.ajout(2);
-        listeATester.ajout(3);
-        Noeud r1 = listeATester.tete.getSuivant();  
-        Noeud r2 = listeATester.tete.getSuivant().getSuivant();  
+        Noeud r1 = listeATester.tete.getSuivant();  // Le noeud avec la valeur 1
+        Noeud r2 = listeATester.tete;  // Tête avec la valeur 2
         listeATester.echanger(r1, r2);
-        assertEquals("ListeSimple(Noeud(1), Noeud(3), Noeud(2))", listeATester.toString());
+        assertEquals("ListeSimple(Noeud(2), Noeud(1))", listeATester.toString());
+        assertEquals(r1, listeATester.tete);  // R1 devient la tête
     }
+
 
 
 }
